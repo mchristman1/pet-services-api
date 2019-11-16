@@ -3,7 +3,6 @@ package com.petservices.api.petservicesapi.Models;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Entity
 @Table(name = "CUSTOMER")
@@ -12,18 +11,16 @@ public class Customer {
     private String Email;
     private String Fname;
     private String Lname;
-    private Date Dob;
     private BigInteger Phone_Number;
 
     private static SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 
     public Customer() {}
 
-    public Customer(String email, String fname, String lname, Date dob, BigInteger phone_number) {
+    public Customer(String email, String fname, String lname, BigInteger phone_number) {
         this.Fname = fname;
         this.Lname = lname;
         this.Email = email;
-        this.Dob = dob;
         this.Phone_Number = phone_number;
     }
 
@@ -61,14 +58,6 @@ public class Customer {
         Lname = lname;
     }
 
-    @Column(name = "Dob", nullable = false)
-    public Date getDob() {
-        return Dob;
-    }
-    public void setDob(Date dob) {
-        Dob = dob;
-    }
-
     @Column(name = "Phone_Number", nullable = false)
     public BigInteger getPhone_Number() {
         return Phone_Number;
@@ -79,8 +68,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer { Customer_id=" + Customer_id + ", Email=" + Email + ", Fname=" + Fname + ", Lname=" + Lname +
-                ", Dob=" + format.format(Dob)
+        return "Customer { Customer_id=" + Customer_id + ", Email=" + Email + ", Fname=" + Fname + ", Lname=" + Lname
                 + ", Phone_Number=" + Phone_Number + "}";
     }
 }

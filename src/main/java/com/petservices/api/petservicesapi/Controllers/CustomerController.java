@@ -4,13 +4,11 @@ import com.petservices.api.petservicesapi.Exceptions.ResourceNotFoundException;
 import com.petservices.api.petservicesapi.Models.Customer;
 import com.petservices.api.petservicesapi.Repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,10 +39,44 @@ public class CustomerController {
         return customers;
     }
 
-    @PostMapping(value = "/newCustomer", consumes = "application/json")
-    public Customer newCustomer(@Valid @RequestBody @DateTimeFormat(pattern = "yyyy-mm-dd") Customer customer) {
+    @GetMapping("/getCustomerByPhone")
+    public List<Customer> getCustomerByPhone(@RequestParam(value = "phone_Number") BigInteger phoneNumber) {
+
+        List<Customer> customers = customerRepository.findByPhone(phoneNumber);
+
+        return customers;
+    }
+
+    @PostMapping(value = "/newCustomer", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Customer newCustomer(Customer customer) {
+        System.out.println("\n\n\n--------- " + customer.toString() + " -----------\n\n\n");
         return customerRepository.save(customer);
     }
+
+    @PutMapping(value = "/updateCustomer", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Customer> updateCustomer(@RequestParam(value = "id") Integer customerId, Customer customerDetails) throws ResourceNotFoundException {
+        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Customer not found for id :: " + customerId));
+
+        if(customerDetails.getFname() != null) {
+            customer.setFname(customerDetails.getFname());
+        }
+
+        if(customerDetails.getLname() != null) {
+            customer.setLname(customerDetails.getLname());
+        }
+
+        if(customerDetails.getPhone_Number() != null) {
+            customer.setPhone_Number(customerDetails.getPhone_Number());
+        }
+
+        if(customerDetails.getEmail() != null) {
+            customer.setEmail(customerDetails.getEmail());
+        }
+
+        Customer updatedCustomer = customerRepository.save(customer);
+        return ResponseEntity.ok(updatedCustomer);
+    }
+
 
     @DeleteMapping("/deleteCustomer")
     public Map<String, Boolean> deleteCustomer(@RequestParam(value = "id") Integer customerId) throws ResourceNotFoundException {

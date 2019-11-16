@@ -19,7 +19,7 @@ public class Location {
     }
 
     @Id
-    @Column(name = "Dnumber", nullable = false)
+    @Column(name = "Dnumber", nullable = false )
     public Integer getDnumber() {
         return Dnumber;
     }
