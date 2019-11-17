@@ -7,7 +7,6 @@ import com.petservices.api.petservicesapi.Models.Section;
 import com.petservices.api.petservicesapi.Models.Wrappers.SectionWrapper;
 import com.petservices.api.petservicesapi.Repositories.ClassRepository;
 import com.petservices.api.petservicesapi.Repositories.SectionRepository;
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -119,7 +118,7 @@ public class SectionController {
         if(date != null) {
             section.setClass_date(date);
         }
-        
+
         SectionWrapper updatedSectionWrapper = new SectionWrapper(
                 section.getSectionIdentity(),
                 section.getClass_start(),

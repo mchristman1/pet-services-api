@@ -2,15 +2,12 @@ package com.petservices.api.petservicesapi.Controllers;
 
 import com.petservices.api.petservicesapi.Exceptions.ResourceNotFoundException;
 import com.petservices.api.petservicesapi.Models.Staff;
-import com.petservices.api.petservicesapi.Repositories.LocationRepository;
 import com.petservices.api.petservicesapi.Repositories.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -56,6 +53,17 @@ public class StaffController {
     @PostMapping(value = "/newStaff", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<Staff> newStaff(Staff staff) {
         return ResponseEntity.ok(staffRepository.save(staff));
+    }
+
+    @GetMapping(value = "/getStaffId", produces = MediaType.TEXT_HTML_VALUE)
+    public String getStaffId(@RequestParam(value = "email") String email) {
+        List<Staff> staff = staffRepository.findByEmail(email);
+
+        if (staff.isEmpty()) {
+            return "-1";
+        } else {
+            return Integer.toString(staff.get(0).getStaff_id());
+        }
     }
 
     @PostMapping(value = "/updateStaff", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

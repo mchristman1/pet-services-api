@@ -31,14 +31,14 @@ public class CustomerController {
         return ResponseEntity.ok().body(customer);
     }
 
-    @GetMapping("/getCustomerId")
-    public Integer getCustomerId(@RequestParam(value = "email") String email) {
+    @GetMapping(value = "/getCustomerId", produces = MediaType.TEXT_HTML_VALUE)
+    public String getCustomerId(@RequestParam(value = "email") String email) {
         List<Customer> customers = customerRepository.findByEmail(email);
 
         if (customers.isEmpty()) {
-            return -1;
+            return "-1";
         } else {
-            return customers.get(0).getCustomer_id();
+            return Integer.toString(customers.get(0).getCustomer_id());
         }
     }
 

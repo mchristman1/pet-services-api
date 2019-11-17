@@ -1,14 +1,18 @@
 package com.petservices.api.petservicesapi.Controllers;
 
 import com.petservices.api.petservicesapi.Exceptions.ResourceNotFoundException;
+import com.petservices.api.petservicesapi.Models.Customer;
 import com.petservices.api.petservicesapi.Models.Pet;
+import com.petservices.api.petservicesapi.Repositories.CustomerRepository;
 import com.petservices.api.petservicesapi.Repositories.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,6 +20,9 @@ import java.util.List;
 public class PetController {
     @Autowired
     private PetRepository petRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     @GetMapping("/all")
     public List<Pet> getAllPets() {
@@ -34,13 +41,21 @@ public class PetController {
         return petRepository.save(pet);
     }
 
-    @GetMapping(value = "/findByCustomer", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public List<Pet> getPetByCustomer(Integer id) {
-        return petRepository.findByCustomer(id);
+    @GetMapping(value = "/findByCustomer")
+    public List<Pet> getPetByCustomer(@RequestParam("email") String email) {
+        List<Customer> customers = customerRepository.findByEmail(email);
+
+        if(customers.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Customer customer = customers.get(0);
+
+        return petRepository.findByCustomer(customer.getCustomer_id());
     }
 
-    @DeleteMapping(value = "deletePet", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<String> deletePet(Integer id) throws  ResourceNotFoundException {
+    @DeleteMapping(value = "deletePet")
+    public ResponseEntity<String> deletePet(@RequestParam("id") Integer id) throws  ResourceNotFoundException {
         Pet pet = petRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pet not found for id: " + id));
 
         petRepository.delete(pet);

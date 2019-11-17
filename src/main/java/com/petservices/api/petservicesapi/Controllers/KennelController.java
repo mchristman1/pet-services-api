@@ -57,10 +57,22 @@ public class KennelController {
 
         return kennelWrappers;
     }
-    //
 
     @PostMapping(value = "/newKennel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public KennelWrapper newKennel(KennelWrapper kennelWrapper) {
+
+        KennelIdentity kennelIdentity = new KennelIdentity(kennelWrapper.getKennel_Id(),
+                kennelWrapper.getBuilding_Number(),
+                kennelWrapper.getRoom_Number(),
+                kennelWrapper.getDnumber());
+
+        Kennel kennel = kennelRepository.save(new Kennel(kennelIdentity, kennelWrapper.getAvailable()));
+
+        return new KennelWrapper(kennel.getId(), kennel.getAvailable());
+    }
+
+    @PostMapping(value = "/updateKennel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public KennelWrapper updateKennel(KennelWrapper kennelWrapper) {
 
         KennelIdentity kennelIdentity = new KennelIdentity(kennelWrapper.getKennel_Id(),
                 kennelWrapper.getBuilding_Number(),

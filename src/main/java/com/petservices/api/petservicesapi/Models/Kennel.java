@@ -6,7 +6,6 @@ import com.petservices.api.petservicesapi.Models.IdentityClasses.KennelIdentity;
 import javax.persistence.*;
 
 @Entity
-//@IdClass(Kennel.IdClass.class)
 @Table(name = "KENNEL")
 public class Kennel {
 
