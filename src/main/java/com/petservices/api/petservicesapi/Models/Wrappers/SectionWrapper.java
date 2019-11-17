@@ -1,29 +1,27 @@
-package com.petservices.api.petservicesapi.Models;
+package com.petservices.api.petservicesapi.Models.Wrappers;
 
 import com.petservices.api.petservicesapi.Models.IdentityClasses.SectionIdentity;
 
-import javax.persistence.*;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Entity
-@Table(name = "SECTION")
-public class Section {
-
-    @EmbeddedId
-    private SectionIdentity sectionIdentity;
-
+public class SectionWrapper {
+    private String Section_id;
+    private Integer Class_id;
     private Time Class_start;
     private Time Class_end;
     private String Class_location;
     private Date Class_date;
     private Integer Staff_id;
 
-    public Section() {
+    public SectionWrapper() {
     }
 
-    public Section(SectionIdentity sectionIdentity, Time class_start, Time class_end, String class_location, Date class_date, Integer staff_id) {
-        this.sectionIdentity = sectionIdentity;
+    public SectionWrapper(String section_id, Integer class_id, Time class_start, Time class_end, String class_location, Date class_date, Integer staff_id) {
+        Section_id = section_id;
+        Class_id = class_id;
         Class_start = class_start;
         Class_end = class_end;
         Class_location = class_location;
@@ -31,15 +29,32 @@ public class Section {
         Staff_id = staff_id;
     }
 
-    public SectionIdentity getSectionIdentity() {
-        return sectionIdentity;
+    public SectionWrapper(SectionIdentity sectionIdentity, Time class_start, Time class_end, String class_location, Date class_date, Integer staff_id) {
+        Section_id = sectionIdentity.getSection_id();
+        Class_id = sectionIdentity.getClass_id();
+        Class_start = class_start;
+        Class_end = class_end;
+        Class_location = class_location;
+        Class_date = class_date;
+        Staff_id = staff_id;
     }
 
-    public void setSectionIdentity(SectionIdentity sectionIdentity) {
-        this.sectionIdentity = sectionIdentity;
+    public String getSection_id() {
+        return Section_id;
     }
 
-    @Column(name = "Class_start", nullable = false)
+    public void setSection_id(String section_id) {
+        Section_id = section_id;
+    }
+
+    public Integer getClass_id() {
+        return Class_id;
+    }
+
+    public void setClass_id(Integer class_id) {
+        Class_id = class_id;
+    }
+
     public Time getClass_start() {
         return Class_start;
     }
@@ -48,7 +63,6 @@ public class Section {
         Class_start = class_start;
     }
 
-    @Column(name = "Class_end", nullable = false)
     public Time getClass_end() {
         return Class_end;
     }
@@ -57,7 +71,6 @@ public class Section {
         Class_end = class_end;
     }
 
-    @Column(name = "Class_location", nullable = false)
     public String getClass_location() {
         return Class_location;
     }
@@ -66,7 +79,6 @@ public class Section {
         Class_location = class_location;
     }
 
-    @Column(name = "Class_date", nullable = false)
     public Date getClass_date() {
         return Class_date;
     }
@@ -75,7 +87,6 @@ public class Section {
         Class_date = class_date;
     }
 
-    @Column(name = "Staff_id", nullable = false)
     public Integer getStaff_id() {
         return Staff_id;
     }

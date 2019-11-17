@@ -1,7 +1,7 @@
 package com.petservices.api.petservicesapi.Repositories;
 
 import com.petservices.api.petservicesapi.Models.Kennel;
-import com.petservices.api.petservicesapi.Models.KennelIdentity;
+import com.petservices.api.petservicesapi.Models.IdentityClasses.KennelIdentity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

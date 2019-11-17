@@ -19,6 +19,7 @@ public class Class {
 
     @Id
     @Column(name = "Class_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getClass_id() {
         return Class_id;
     }

@@ -1,4 +1,4 @@
-package com.petservices.api.petservicesapi.Models;
+package com.petservices.api.petservicesapi.Models.IdentityClasses;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

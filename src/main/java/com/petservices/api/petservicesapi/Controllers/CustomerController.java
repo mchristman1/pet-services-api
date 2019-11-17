@@ -31,9 +31,20 @@ public class CustomerController {
         return ResponseEntity.ok().body(customer);
     }
 
+    @GetMapping("/getCustomerId")
+    public Integer getCustomerId(@RequestParam(value = "email") String email) {
+        List<Customer> customers = customerRepository.findByEmail(email);
+
+        if (customers.isEmpty()) {
+            return -1;
+        } else {
+            return customers.get(0).getCustomer_id();
+        }
+    }
+
     @GetMapping("/getCustomerByEmail")
     public List<Customer> getCustomerByEmail(@RequestParam(value = "email") String email) {
-
+        System.out.println("\n\n----- GET CUSTOMER BY EMAIL -----");
         List<Customer> customers = customerRepository.findByEmail(email);
 
         return customers;
@@ -53,8 +64,9 @@ public class CustomerController {
         return customerRepository.save(customer);
     }
 
-    @PutMapping(value = "/updateCustomer", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/updateCustomer", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<Customer> updateCustomer(@RequestParam(value = "id") Integer customerId, Customer customerDetails) throws ResourceNotFoundException {
+        System.out.println("\n\n--- PUT CUSTOMER ---\n\n");
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Customer not found for id :: " + customerId));
 
         if(customerDetails.getFname() != null) {

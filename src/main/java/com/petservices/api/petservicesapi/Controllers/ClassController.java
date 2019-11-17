@@ -2,6 +2,7 @@ package com.petservices.api.petservicesapi.Controllers;
 
 import com.petservices.api.petservicesapi.Exceptions.ResourceNotFoundException;
 import com.petservices.api.petservicesapi.Repositories.ClassRepository;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,9 @@ public class ClassController {
         return classRepository.save(pClass);
     }
 
-    @PutMapping(value = "/updateClass", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<Class> updateClass(Class pClassDetails) throws ResourceNotFoundException {
-        Class pClass = classRepository.findById(pClassDetails.getClass_id()).orElseThrow(() -> new ResourceNotFoundException("Class not found for id: " + pClassDetails.getClass_id()));
+    @PostMapping(value = "/updateClass", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Class> updateClass(@RequestParam("id") Integer id, Class pClassDetails) throws ResourceNotFoundException {
+        Class pClass = classRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Class not found for id: " + id));
 
         if(pClassDetails.getClass_name() != null) {
             pClass.setClass_name(pClassDetails.getClass_name());

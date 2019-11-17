@@ -1,8 +1,8 @@
 package com.petservices.api.petservicesapi.Controllers;
 
 import com.petservices.api.petservicesapi.Models.Kennel;
-import com.petservices.api.petservicesapi.Models.KennelIdentity;
-import com.petservices.api.petservicesapi.Models.KennelWrapper;
+import com.petservices.api.petservicesapi.Models.IdentityClasses.KennelIdentity;
+import com.petservices.api.petservicesapi.Models.Wrappers.KennelWrapper;
 import com.petservices.api.petservicesapi.Repositories.KennelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

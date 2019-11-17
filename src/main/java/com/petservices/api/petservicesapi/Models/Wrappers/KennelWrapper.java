@@ -1,4 +1,6 @@
-package com.petservices.api.petservicesapi.Models;
+package com.petservices.api.petservicesapi.Models.Wrappers;
+
+import com.petservices.api.petservicesapi.Models.IdentityClasses.KennelIdentity;
 
 public class KennelWrapper {
 

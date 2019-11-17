@@ -29,7 +29,7 @@ public class LocationController {
         return ResponseEntity.ok(location);
     }
 
-    @PutMapping(value = "/updateLocation", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/updateLocation", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<Location> updateLocation(@RequestParam("id") Integer id, Location locationDetails) throws ResourceNotFoundException {
         Location location = locationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Location not found for id: " + id));
 
