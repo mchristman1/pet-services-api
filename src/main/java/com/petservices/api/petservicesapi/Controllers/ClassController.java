@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.petservices.api.petservicesapi.Models.Class;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/class")
@@ -62,7 +63,7 @@ public class ClassController {
 
         classRepository.delete(pClass);
 
-        return ResponseEntity.ok("deleted");
+        return ResponseEntity.ok("{ deleted: true }");
 
     }
 }

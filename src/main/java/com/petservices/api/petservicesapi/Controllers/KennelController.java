@@ -1,11 +1,13 @@
 package com.petservices.api.petservicesapi.Controllers;
 
+import com.petservices.api.petservicesapi.Exceptions.ResourceNotFoundException;
 import com.petservices.api.petservicesapi.Models.Kennel;
 import com.petservices.api.petservicesapi.Models.IdentityClasses.KennelIdentity;
 import com.petservices.api.petservicesapi.Models.Wrappers.KennelWrapper;
 import com.petservices.api.petservicesapi.Repositories.KennelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -96,5 +98,15 @@ public class KennelController {
         Kennel kennel = kennelRepository.save(new Kennel(kennelIdentity, kennelWrapper.getAvailable()));
 
         return new KennelWrapper(kennel.getId(), kennel.getAvailable());
+    }
+
+    @PostMapping(value = "/deleteKennel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<String> deleteKennel(KennelIdentity kennelIdentity) throws ResourceNotFoundException {
+
+        Kennel kennel = kennelRepository.findById(kennelIdentity).orElseThrow(() -> new ResourceNotFoundException("Kennel not found for id: " + kennelIdentity.toString()));
+
+        kennelRepository.delete(kennel);
+
+        return ResponseEntity.ok("deleted");
     }
 }
