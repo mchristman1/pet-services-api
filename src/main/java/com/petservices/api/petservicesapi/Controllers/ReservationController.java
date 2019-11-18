@@ -68,6 +68,11 @@ public class ReservationController {
         return classReservationRepository.save(classReservation);
     }
 
+    @GetMapping("/class/getClassReservationByPet")
+    public List<ClassReservation> getClassReservationByPet(@RequestParam("id") Integer id) {
+        return classReservationRepository.getReservationsByPet(id);
+    }
+
     @PostMapping("/class/cancelReservation")
     public ResponseEntity<String> cancelClassReservation(@RequestParam("id") Integer reservationId) throws ResourceNotFoundException {
         ClassReservation classReservation = classReservationRepository.findById(reservationId).orElseThrow(() -> new ResourceNotFoundException("Reservation not found for id: " + reservationId));
@@ -98,6 +103,11 @@ public class ReservationController {
         kennelReservationRepository.delete(kennelReservation);
 
         return ResponseEntity.ok("cancelled");
+    }
+
+    @GetMapping("/kennel/getKennelReservationByPet")
+    public List<KennelReservation> getKennelReservationByPet(@RequestParam("id") Integer id) {
+        return kennelReservationRepository.getReservationsByPet(id);
     }
 
     @GetMapping("/kennel/getKennelReservationByCustomer")
