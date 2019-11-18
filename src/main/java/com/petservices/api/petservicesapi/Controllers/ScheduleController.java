@@ -24,7 +24,7 @@ public class ScheduleController {
     }
 
     @PostMapping("/newSchedule")
-    public WorkSchedule newSchedule(WorkSchedule workSchedule, @DateTimeFormat(pattern = "yyyy-mm-dd") Date scheduleDate) {
+    public WorkSchedule newSchedule(WorkSchedule workSchedule, @DateTimeFormat(pattern = "yyyy-MM-dd") Date scheduleDate) {
         workSchedule.setSchedule_date(scheduleDate);
         return scheduleRepository.save(workSchedule);
     }
@@ -41,7 +41,7 @@ public class ScheduleController {
     }
 
     @PostMapping(value = "/updateSchedule", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public WorkSchedule updateSchedule(WorkSchedule scheduleDetails, @DateTimeFormat(pattern = "yyyy-mm-dd") Date date) throws ResourceNotFoundException {
+    public WorkSchedule updateSchedule(WorkSchedule scheduleDetails, @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) throws ResourceNotFoundException {
         WorkSchedule workSchedule = scheduleRepository.findById(scheduleDetails.getSchedule_id()).orElseThrow(() -> new ResourceNotFoundException("Schedule not found for id: " + scheduleDetails.getSchedule_id()));
 
         if(date != null) {

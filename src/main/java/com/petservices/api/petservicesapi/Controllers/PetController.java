@@ -54,7 +54,7 @@ public class PetController {
         return petRepository.findByCustomer(customer.getCustomer_id());
     }
 
-    @DeleteMapping(value = "deletePet")
+    @PostMapping(value = "deletePet")
     public ResponseEntity<String> deletePet(@RequestParam("id") Integer id) throws  ResourceNotFoundException {
         Pet pet = petRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pet not found for id: " + id));
 

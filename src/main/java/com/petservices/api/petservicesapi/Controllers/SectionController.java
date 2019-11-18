@@ -70,7 +70,7 @@ public class SectionController {
 
     //new section
     @PostMapping(value = "/newSection", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public SectionWrapper newSection(SectionWrapper sectionWrapper, @DateTimeFormat(pattern = "yyyy-mm-dd") Date date) {
+    public SectionWrapper newSection(SectionWrapper sectionWrapper, @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         SectionIdentity sectionIdentity = new SectionIdentity(sectionWrapper.getSection_id(), sectionWrapper.getClass_id());
         Section section = new Section(
                 sectionIdentity,
@@ -95,7 +95,7 @@ public class SectionController {
 
     //update section
     @PostMapping(value = "/updateSection", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity<SectionWrapper> updateSection(SectionWrapper sectionWrapper, @DateTimeFormat(pattern = "yyyy-mm-dd") Date date) throws ResourceNotFoundException {
+    public ResponseEntity<SectionWrapper> updateSection(SectionWrapper sectionWrapper, @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) throws ResourceNotFoundException {
         Section section = sectionRepository.findById(new SectionIdentity(sectionWrapper.getSection_id(), sectionWrapper.getClass_id()))
                 .orElseThrow(() -> new ResourceNotFoundException("Section not found for section id: " + sectionWrapper.getSection_id() + " and class id: " + sectionWrapper.getClass_id()));
 
@@ -132,17 +132,12 @@ public class SectionController {
     }
 
     //delete section
-    @DeleteMapping("/deleteSection")
+    @PostMapping("/deleteSection")
     public ResponseEntity<String> deleteSection(@RequestParam("sectionId") String sectionId, @RequestParam("classId") Integer classId) throws ResourceNotFoundException {
         Section section = sectionRepository.findById(new SectionIdentity(sectionId, classId)).orElseThrow(() -> new ResourceNotFoundException("Section not found for Section Id: " + sectionId + " and Class id: " + classId));
 
         sectionRepository.delete(section);
 
         return ResponseEntity.ok("deleted");
-    }
-
-    @PostMapping(value = "/date", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public Date dateTest(@DateTimeFormat(pattern = "yyyy-mm-dd") Date date) {
-        return date;
     }
 }

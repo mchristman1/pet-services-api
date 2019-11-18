@@ -9,9 +9,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface KennelRepository extends JpaRepository<Kennel, KennelIdentity> {
-    @Query(value = "SELECT * FROM KENNEL WHERE Dnumber= :dnumber AND Building_Number= :buildingNumber AND Room_Number= :roomNumber", nativeQuery = true)
+    @Query(value = "SELECT * FROM KENNEL WHERE Dnumber= :dnumber AND Building_Number= :buildingNumber AND Room_Number= :roomNumber AND Is_Available= 1", nativeQuery = true)
     List<Kennel> findByRoom(@Param("dnumber") Integer dnumber, @Param("buildingNumber") Integer buildingNumber, @Param("roomNumber")Integer roomNumber);
 
-    @Query(value = "SELECT * FROM KENNEL WHERE Dnumber= :dnumber AND Building_Number= :buildingNumber", nativeQuery = true)
+    @Query(value = "SELECT * FROM KENNEL WHERE Dnumber= :dnumber AND Building_Number= :buildingNumber AND Is_Available= 1", nativeQuery = true)
     List<Kennel> findByBuilding(@Param("dnumber") Integer dnumber, @Param("buildingNumber") Integer buildingNumber);
+
+    @Query(value = "SELECT * FROM KENNEL WHERE Dnumber= :dnumber AND Is_Available= 1", nativeQuery = true)
+    List<Kennel> findByLocation(@Param("dnumber") Integer dnumber);
 }

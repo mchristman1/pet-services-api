@@ -90,7 +90,7 @@ public class CustomerController {
     }
 
 
-    @DeleteMapping("/deleteCustomer")
+    @PostMapping("/deleteCustomer")
     public Map<String, Boolean> deleteCustomer(@RequestParam(value = "id") Integer customerId) throws ResourceNotFoundException {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Customer not found for id: " + customerId));
         customerRepository.delete(customer);

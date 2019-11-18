@@ -103,7 +103,7 @@ public class StaffController {
         return ResponseEntity.ok(updatedStaff);
     }
 
-    @DeleteMapping("/deleteStaff")
+    @PostMapping("/deleteStaff")
     public ResponseEntity<String> deleteStaff(@RequestParam("id") Integer id) throws ResourceNotFoundException {
         Staff staff = staffRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Staff member not found for id: " + id));
         staffRepository.delete(staff);

@@ -59,7 +59,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/class/newReservation", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ClassReservation newClassReservation(@DateTimeFormat(pattern = "yyyy-mm-dd") Date rdate, ClassReservation classReservation) {
+    public ClassReservation newClassReservation(@DateTimeFormat(pattern = "yyyy-MM-dd") Date rdate, ClassReservation classReservation) {
 
         System.out.println("\n\n\n----- " + rdate + " ---------\n\n\n");
 
@@ -68,7 +68,7 @@ public class ReservationController {
         return classReservationRepository.save(classReservation);
     }
 
-    @DeleteMapping("/class/cancelReservation")
+    @PostMapping("/class/cancelReservation")
     public ResponseEntity<String> cancelClassReservation(@RequestParam("id") Integer reservationId) throws ResourceNotFoundException {
         ClassReservation classReservation = classReservationRepository.findById(reservationId).orElseThrow(() -> new ResourceNotFoundException("Reservation not found for id: " + reservationId));
 
@@ -83,7 +83,7 @@ public class ReservationController {
     }
 
     @PostMapping(value = "/kennel/newReservation", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public KennelReservation newKennelReservation(@DateTimeFormat(pattern = "yyyy-mm-dd") Date startDate, @DateTimeFormat(pattern = "yyyy-mm-dd") Date endDate, KennelReservation kennelReservation) {
+    public KennelReservation newKennelReservation(@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate, @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate, KennelReservation kennelReservation) {
 
         kennelReservation.setReservation_start(startDate);
         kennelReservation.setReservation_end(endDate);
@@ -91,7 +91,7 @@ public class ReservationController {
         return kennelReservationRepository.save(kennelReservation);
     }
 
-    @DeleteMapping("/kennel/cancelReservation")
+    @PostMapping("/kennel/cancelReservation")
     public ResponseEntity<String> cancelKennelReservation(@RequestParam("id") Integer reservationId) throws ResourceNotFoundException {
         KennelReservation kennelReservation = kennelReservationRepository.findById(reservationId).orElseThrow(() -> new ResourceNotFoundException("Reservation not found for id: " + reservationId));
 

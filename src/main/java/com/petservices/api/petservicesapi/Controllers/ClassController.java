@@ -56,7 +56,7 @@ public class ClassController {
         return ResponseEntity.ok(updatedClass);
     }
 
-    @DeleteMapping(value = "/deleteClass")
+    @PostMapping(value = "/deleteClass")
     public ResponseEntity<String> deleteClass(@RequestParam("id") Integer id) throws ResourceNotFoundException {
         Class pClass = classRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Class not found for id: " + id));
 

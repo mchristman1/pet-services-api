@@ -58,6 +58,20 @@ public class KennelController {
         return kennelWrappers;
     }
 
+    //Search by location
+    @GetMapping("/getKennelsByLocation")
+    public List<KennelWrapper> getKennelsByLocation(@RequestParam("dnumber") Integer dnumber) {
+        List<Kennel> kennels = kennelRepository.findByLocation(dnumber);
+
+        List<KennelWrapper> kennelWrappers = new ArrayList<>();
+
+        for (Kennel kennel: kennels) {
+            kennelWrappers.add(new KennelWrapper(kennel.getId(), kennel.getAvailable()));
+        }
+
+        return kennelWrappers;
+    }
+
     @PostMapping(value = "/newKennel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public KennelWrapper newKennel(KennelWrapper kennelWrapper) {
 
